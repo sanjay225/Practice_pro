@@ -21,26 +21,64 @@ namespace CodePulse.API.Controllers
         public ApplicationDbContext DbContext { get; }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request) 
+        public async Task<IActionResult> CreateCategory(Category request)
         {
-            var category = new Category
-            {
-                Name = request.Name,
-                UrlHandle = request.UrlHandle
-            };
-
-            await DbContext.Categories.AddAsync(category);
+            await DbContext.Categories.AddAsync(request);
             await DbContext.SaveChangesAsync();
 
-            var response = new CategoryDto
-            {
-                Id = category.Id,
-                Name = category.Name,
-                UrlHandle = category.UrlHandle
-               
-            };
-
-            return Ok(response);
+            return Ok(request);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAllCategories()
+        {
+            var cat = await DbContext.Categories.ToListAsync();
+
+            return Ok(cat);
+        }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<ActionResult> GetAllCategories(Guid id)
+        {
+            var cat = await DbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            if (cat == null)
+                return NotFound();
+
+            return Ok(cat);
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<ActionResult> DeleteCategory(Guid id)
+        {
+            var cat = await DbContext.Categories.FindAsync(id);
+            if (cat == null)
+                return NotFound();
+
+            DbContext.Categories.Remove(cat);
+            await DbContext.SaveChangesAsync();
+
+            return Ok(cat);
+
+        }
+        [HttpPut]
+        [Route("{id:Guid}")]
+
+        public async Task<IActionResult> UpdateCategory([FromRoute]Guid id, Category updateCatRequest)
+        {
+            var cat = await DbContext.Categories.FindAsync(id);
+            if (cat == null)
+                return NotFound();
+
+            cat.Name = updateCatRequest.Name;
+            cat.UrlHandle = updateCatRequest.UrlHandle;
+
+            await DbContext.SaveChangesAsync();
+
+            return Ok(cat);
+
+        }
+
     }
 }
