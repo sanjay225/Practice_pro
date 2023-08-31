@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AddCategoryRequest } from '../models/add-category-request.model';
+import { CategoryService } from '../services/category.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-category-list',
@@ -10,7 +12,18 @@ export class CategoryListComponent implements OnInit{
 
   categoryList: AddCategoryRequest[]=[];
 
-  ngOnInit() {
+  constructor(private _catService: CategoryService){}
+
+  ngOnInit(): void {
+    this._catService.getCatagoryList().subscribe({
+      next: (categoryList)=>{
+        this.categoryList= categoryList
+        console.log(categoryList)
+      },
+      error: (res)=>{
+        console.log(res)
+      }
+    })
   }
 
 }

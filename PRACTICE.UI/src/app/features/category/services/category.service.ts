@@ -10,9 +10,27 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  // get(): Observable<AddCategoryRequest[]>{
-  //   return this.http.get<AddCategoryRequest>()
-  // }
+  getCatagoryList(): Observable<AddCategoryRequest[]>{
+    return this.http.get<AddCategoryRequest[]>('https://localhost:7168/api/Categories')
+  }
+
+  addCategoryList(model: AddCategoryRequest): Observable<AddCategoryRequest>{
+    model.id="00000000-0000-0000-0000-000000000000"
+   return this.http.post<AddCategoryRequest>('https://localhost:7168/api/Categories', model)
+  }
+
+  getCategoryListForEdit(id: string): Observable<AddCategoryRequest>{
+
+   return this.http.get<AddCategoryRequest>(`https://localhost:7168/api/Categories/${id}`)
+  }
+
+  updateCategoyList(id:string, editCategory: AddCategoryRequest): Observable<AddCategoryRequest> {
+    return this.http.put<AddCategoryRequest>(`https://localhost:7168/api/Categories/${id}`, editCategory)
+  }
+
+  deleteCategoryList(id: string): Observable<AddCategoryRequest>{
+    return this.http.delete<AddCategoryRequest>(`https://localhost:7168/api/Categories/${id}`)
+  }
 }
 
 

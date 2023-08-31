@@ -5,19 +5,21 @@
         <a [routerLink]="['/admin/categories/add']" class="btn btn-primary">Add Category</a>
     </div>
 
-    <table class="table" *ngIf="categoryList && categoryList.length>0">
+    <table class="table" *ngIf="categoryList && categoryList.length > 0">
         <thead>
             <tr>
                 <th>Category Name</th>
                 <th>Category Url Handle</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let list of categoryList">
                 <td>{{list.name}}</td>
                 <td>{{list.urlHandle}}</td>
+                <td><a [routerLink]="['/admin/categories/edit', list.id ]">Edit</a></td>
             </tr>
         </tbody>
     </table>
-    <p *ngIf="!categoryList || categoryList.length<=0">Catagory List is empty</p>
+    <p *ngIf="!categoryList || categoryList.length <= 0">Catagory List is empty</p>
 </div>
