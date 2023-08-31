@@ -31,7 +31,7 @@ namespace CodePulse.API.Controllers
 
         [HttpGet]
         public async Task<ActionResult> GetAllCategories()
-        {
+            {
             var cat = await DbContext.Categories.ToListAsync();
 
             return Ok(cat);
@@ -66,7 +66,7 @@ namespace CodePulse.API.Controllers
         [Route("{id:Guid}")]
 
         public async Task<IActionResult> UpdateCategory([FromRoute]Guid id, Category updateCatRequest)
-        {
+            {
             var cat = await DbContext.Categories.FindAsync(id);
             if (cat == null)
                 return NotFound();
@@ -75,9 +75,10 @@ namespace CodePulse.API.Controllers
             cat.UrlHandle = updateCatRequest.UrlHandle;
 
             await DbContext.SaveChangesAsync();
-
+               
             return Ok(cat);
 
+            return Ok(response);
         }
 
     }
