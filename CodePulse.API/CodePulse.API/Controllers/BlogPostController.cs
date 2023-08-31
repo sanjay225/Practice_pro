@@ -8,12 +8,12 @@ namespace CodePulse.API.Controllers
     [ApiController]
     public class BlogPostController : ControllerBase
     {
-      /* public class BlogPostController(ApplicationDbContext dbContext)
-        {
-            this.DbContext = dbContext;
-        }
+       //public class BlogPostController(ApplicationDbContext dbContext)
+       // {
+       //     this._DbContext = dbContext;
+       // }
 
-        public ApplicationDbContext DbContext { get; }*/
+        //public ApplicationDbContext _DbContext { get; }
 
 
     }

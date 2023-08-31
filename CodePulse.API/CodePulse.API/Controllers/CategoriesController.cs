@@ -76,9 +76,7 @@ namespace CodePulse.API.Controllers
 
             await DbContext.SaveChangesAsync();
                
-            return Ok(cat);
-
-            return Ok(response);
+            return Ok(updateCatRequest);
         }
 
     }
